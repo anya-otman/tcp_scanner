@@ -12,3 +12,9 @@ python tcp_scanner.py [Адрес хоста] [Начало диапазона] 
 ```
 python tcp_scanner.py 127.0.0.1 100 5000
 ```
+![Image alt](https://github.com/anya-otman/tcp_scanner/blob/main//example1.png)
+## №2
+```
+python tcp_scanner.py localhost 0 10000
+```
+![Image alt](https://github.com/anya-otman/tcp_scanner/blob/main//example2.png)
