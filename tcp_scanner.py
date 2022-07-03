@@ -1,6 +1,7 @@
 import argparse
 import socket
 import sys
+import urllib.request
 from threading import Thread, Lock
 from queue import Queue
 
@@ -35,6 +36,14 @@ def scan_thread():
         q.task_done()
 
 
+def is_connect_to_Internet():
+    try:
+        urllib.request.urlopen('http://google.com')
+        return True
+    except:
+        return False
+
+
 def main():
     global q, host
 
@@ -48,6 +57,8 @@ def main():
     host = args.host
     if args.start < 0 or args.end > 65535:
         sys.exit('Начало и конец диапазона должны быть в границах от 0 до 65535')
+    elif not is_connect_to_Internet():
+        sys.exit('Проверьте подключение к Интернету')
     else:
         for t in range(N_THREADS):
             t = Thread(target=scan_thread)
