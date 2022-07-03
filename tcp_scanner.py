@@ -4,18 +4,17 @@ import sys
 from threading import Thread, Lock
 from queue import Queue
 
-N_THREADS = 100
+N_THREADS = 50
 q = Queue()
 print_lock = Lock()
 host = ''
 
 
 def scan_tcp_port(host: str, port: int):
-    addr = convert_domain_to_ip(host)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(0.5)
     try:
-        s.connect((addr, port))
+        s.connect((host, port))
     except socket.error:
         pass
     else:
@@ -23,14 +22,6 @@ def scan_tcp_port(host: str, port: int):
             print('TCP port :', port, ' is open')
     finally:
         s.close()
-
-
-def convert_domain_to_ip(domain: str) -> str:
-    try:
-        ip = socket.gethostbyname(domain)
-        return ip
-    except socket.gaierror:
-        sys.exit('Проверьте подключение к Интернету или корректность адреса хоста')
 
 
 def scan_thread():
